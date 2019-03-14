@@ -1,0 +1,14 @@
+C:\Users\pati\Desktop\Platformy .Net i Java\SPD\Lab1\Lab1\obj\Debug\Lab1.csprojResolveAssemblyReference.cache
+C:\Users\pati\Desktop\Platformy .Net i Java\SPD\Lab1\Lab1\obj\Debug\Lab1.csproj.CoreCompileInputs.cache
+C:\Users\pati\Desktop\Platformy .Net i Java\SPD\Lab1\Lab1\bin\Debug\Lab1.exe.config
+C:\Users\pati\Desktop\Platformy .Net i Java\SPD\Lab1\Lab1\bin\Debug\Lab1.exe
+C:\Users\pati\Desktop\Platformy .Net i Java\SPD\Lab1\Lab1\bin\Debug\Lab1.pdb
+C:\Users\pati\Desktop\Platformy .Net i Java\SPD\Lab1\Lab1\obj\Debug\Lab1.exe
+C:\Users\pati\Desktop\Platformy .Net i Java\SPD\Lab1\Lab1\obj\Debug\Lab1.pdb
+C:\Users\pati\Desktop\semestr 6\SPD\Lab1\Lab1\bin\Debug\Lab1.exe.config
+C:\Users\pati\Desktop\semestr 6\SPD\Lab1\Lab1\bin\Debug\Lab1.exe
+C:\Users\pati\Desktop\semestr 6\SPD\Lab1\Lab1\bin\Debug\Lab1.pdb
+C:\Users\pati\Desktop\semestr 6\SPD\Lab1\Lab1\obj\Debug\Lab1.csprojResolveAssemblyReference.cache
+C:\Users\pati\Desktop\semestr 6\SPD\Lab1\Lab1\obj\Debug\Lab1.csproj.CoreCompileInputs.cache
+C:\Users\pati\Desktop\semestr 6\SPD\Lab1\Lab1\obj\Debug\Lab1.exe
+C:\Users\pati\Desktop\semestr 6\SPD\Lab1\Lab1\obj\Debug\Lab1.pdb
