@@ -1,0 +1,60 @@
+test1: 
+
+[3 Machines] 
+[Permutation]	 Sequences : ADCB	 Time: 53
+[Johnson]	 Sequences : ADCB	 Time: 53
+
+test2: 
+
+[3 Machines] 
+[Permutation]	 Sequences : DACB	 Time: 42,1
+[Johnson]	 Sequences : DACB	 Time: 42,1
+
+test3: 
+
+[3 Machines] 
+[Permutation]	 Sequences : ADCB	 Time: 54,48
+[Johnson]	 Sequences : DACB	 Time: 54,48
+
+test4: 
+
+[2 Machines] 
+[Permutation]	 Sequences : EBDCA	 Time: 20
+[Johnson]	 Sequences : EDCBA	 Time: 20
+
+test5: 
+
+[3 Machines] 
+[Permutation]	 Sequences : DAFBEC	 Time: 68,3
+[Johnson]	 Sequences : DAFBEC	 Time: 68,3
+
+test6: 
+
+[3 Machines] 
+[Permutation]	 Sequences : CABD	 Time: 54,74
+[Johnson]	 Sequences : CADB	 Time: 54,74
+
+test7: 
+
+[3 Machines] 
+[Permutation]	 Sequences : ABCDE	 Time: 48,3
+[Johnson]	 Sequences : ACDEB	 Time: 48,3
+
+test8: 
+
+[2 Machines] 
+[Permutation]	 Sequences : ADCB	 Time: 36
+[Johnson]	 Sequences : ADCB	 Time: 36
+
+test9: 
+
+[2 Machines] 
+[Permutation]	 Sequences : AEBGDCF	 Time: 91,5
+[Johnson]	 Sequences : AEBGCDF	 Time: 91,5
+
+test10: 
+
+[3 Machines] 
+[Permutation]	 Sequences : BAC	 Time: 71,2
+[Johnson]	 Sequences : BAC	 Time: 71,2
+
