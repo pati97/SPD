@@ -1,5 +1,9 @@
 ﻿#define DEBUG_PRINT
-#define PERMUTATION_PRINT
+//#define PERMUTATION
+//#define JOHNSON_2MACHINES_PRINT
+//#define PERMUTATION_2MACHINES_PRINT
+#define PERMUTATION_3MACHINES_PRINT
+#define JOHNSON_3MACHINES_PRINT
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -95,7 +99,7 @@ namespace Lab1
         {
             string path = @"C:\Users\pati\Desktop\semestr 6\SPD\Lab1\Lab1\tests\test";
 
-            int numberOfTests = 1;
+            int numberOfTests = 2;
             string[] paths = new string[numberOfTests];
 
             for (int i = 0; i < paths.Length; ++i)
@@ -144,77 +148,77 @@ namespace Lab1
                 // *************************************************************************************************
 
                 Machine[] machineForPermutation2 = new Machine[2];
-                Machine[] copyMachineToPermutation = new Machine[2];
+                Machine[] copyMachineToPermutation2 = new Machine[2];
 
                 for (int i = 0; i < machineForPermutation2.Length; ++i)
                 {
                     machineForPermutation2[i] = machines[i].DeepCopy();
-                    copyMachineToPermutation[i] = machines[i].DeepCopy(); 
+                    copyMachineToPermutation2[i] = machines[i].DeepCopy();
                 }
 
-                int factorial = Factorial(numberOfJobs);
-                string[,] array = new string[factorial, numberOfJobs];
-                int count = 0;
+                int factorial2 = Factorial(numberOfJobs);
+                string[,] array2 = new string[factorial2, numberOfJobs];
+                int count2 = 0;
 
-                PermutationAlgorithm.Permutation(ref charArray, 0, numberOfJobs - 1, ref array, ref count);
+                PermutationAlgorithm.Permutation(ref charArray, 0, numberOfJobs - 1, ref array2, ref count2);
 
-#if DEBUG_PRINT
+#if PERMUTATION_2MACHINES_PRINT
                 Console.WriteLine("All permutations for 2 machines");
-                for (int i = 0; i < factorial; ++i)
+                for (int i = 0; i < factorial2; ++i)
                 {
                     for (int j = 0; j < numberOfJobs; ++j)
                     {
-                        Console.Write("{0} ", array[i, j]);
+                        Console.Write("{0} ", array2[i, j]);
                     }
                     Console.Write("\n");
                 }
 #endif
 
-                double theBestTime = MakeSpan(ref copyMachineToPermutation[0], ref copyMachineToPermutation[1]);
-                string[] theBestSequence = new string[numberOfJobs];
+                double theBestTime2 = MakeSpan(ref copyMachineToPermutation2[0], ref copyMachineToPermutation2[1]);
+                string[] theBestSequence2 = new string[numberOfJobs];
 
                 for (int i = 0; i < numberOfJobs; i++)
                 {
-                    theBestSequence[i] = copyMachineToPermutation[0].jobs[i].jobName;
+                    theBestSequence2[i] = copyMachineToPermutation2[0].jobs[i].jobName;
                 }
 
-                for (int i = 1; i < factorial; ++i)
+                for (int i = 1; i < factorial2; ++i)
                 {
                     for (int j = 0; j < numberOfJobs; ++j)
                     {
                         for (int k = 0; k < numberOfJobs; ++k)
                         {
-                            if (machines[0].jobs[k].jobName == array[i, j])
+                            if (machines[0].jobs[k].jobName == array2[i, j])
                             {
-                                machineForPermutation2[0].jobs[j].time = copyMachineToPermutation[0].jobs[k].time;
-                                machineForPermutation2[0].jobs[j].jobName = copyMachineToPermutation[0].jobs[k].jobName;
+                                machineForPermutation2[0].jobs[j].time = copyMachineToPermutation2[0].jobs[k].time;
+                                machineForPermutation2[0].jobs[j].jobName = copyMachineToPermutation2[0].jobs[k].jobName;
                             }
-                            if (machines[1].jobs[k].jobName == array[i, j])
+                            if (machines[1].jobs[k].jobName == array2[i, j])
                             {
-                                machineForPermutation2[1].jobs[j].time = copyMachineToPermutation[1].jobs[k].time;
-                                machineForPermutation2[1].jobs[j].jobName = copyMachineToPermutation[1].jobs[k].jobName;
+                                machineForPermutation2[1].jobs[j].time = copyMachineToPermutation2[1].jobs[k].time;
+                                machineForPermutation2[1].jobs[j].jobName = copyMachineToPermutation2[1].jobs[k].jobName;
                             }
                         }
                     }
 
                     double currentTime = MakeSpan(ref machineForPermutation2[0], ref machineForPermutation2[1]);
 
-                    if (currentTime < theBestTime)
+                    if (currentTime < theBestTime2)
                     {
-                        theBestTime = currentTime;
+                        theBestTime2 = currentTime;
                         for (int p = 0; p < numberOfJobs; p++)
                         {
-                            theBestSequence[p] = machineForPermutation2[0].jobs[p].jobName;
+                            theBestSequence2[p] = machineForPermutation2[0].jobs[p].jobName;
                         }
                     }
                 }
 
-#if PERMUTATION_PRINT
+#if PERMUTATION_2MACHINES_PRINT
                 Console.WriteLine("[PERMUTATION THE SEQUENCE AND TIME");
-                Console.WriteLine("The best time for permutation 2 machines = {0}", theBestTime);
+                Console.WriteLine("The best time for permutation 2 machines = {0}", theBestTime2);
                 for (int i = 0; i < numberOfJobs; ++i)
                 {
-                    Console.Write("{0} ", theBestSequence[i]);
+                    Console.Write("{0} ", theBestSequence2[i]);
                 }
 #endif
 
@@ -252,279 +256,205 @@ namespace Lab1
                         }
                     }
                 }
-
-                Console.WriteLine("[JOHNSON] The best time = {0}", MakeSpan(ref machineForJohnson2[0], ref machineForJohnson2[1]));
-
+#if JOHNSON_2MACHINES_PRINT
+                Console.WriteLine("[JOHNSON][2 MACHINES]");
+                Console.WriteLine("The best time = {0}", MakeSpan(ref machineForJohnson2[0], ref machineForJohnson2[1]));
                 for (int i = 0; i < numberOfJobs; ++i)
                 {
                     Console.Write("{0} ", outputJobs2[i].jobName);
                 }
                 Console.Write(Environment.NewLine);
+#endif
 
                 // *************************************************************************************************
                 // END!!! NUMBER OF MACHINES:2, ALGORITHM:JOHNSON
                 // *************************************************************************************************
 
-                /*
-                Job[] outputJob3 = JohnsonAlgorithm.JohnsonAlg(ref virtualMachineToJohnson[0], ref virtualMachineToJohnson[1]);
 
-                for (int i = 0; i < Length; ++i)
+                // *************************************************************************************************
+                // NUMBER OF MACHINES:3, ALGORITHM:PERMUTATION
+                // *************************************************************************************************
+
+                Machine[] machineForPermutation3 = new Machine[3];
+                Machine[] copyMachineToPermutation3 = new Machine[3];
+
+                for (int i = 0; i < machineForPermutation3.Length; ++i)
                 {
-                    Console.Write("{0} ", outputJob3[i].jobName);
+                    machineForPermutation3[i] = machines[i].DeepCopy();
+                    copyMachineToPermutation3[i] = machines[i].DeepCopy();
                 }
 
-                for (int j = 0; j < Length; ++j)
-                {
-                    for (int k = 0; k < Length; ++k)
-                    {
-                        if (outputJob3[j].jobName == charArray[k])
-                        {
-                            virtualMachineToJohnson[0].jobs[j].time = virtualMachine[0].jobs[k].time;
-                            virtualMachineToJohnson[0].jobs[j].jobName = charArray[k];
+                Machine[] virtualMachineForPermutation3 = new Machine[2];
 
-                            virtualMachineToJohnson[1].jobs[j].time = virtualMachine[1].jobs[k].time;
-                            virtualMachineToJohnson[1].jobs[j].jobName = charArray[k];
+                for (int i = 0; i < virtualMachineForPermutation3.Length; ++i)
+                {
+                    virtualMachineForPermutation3[i] = VirtualMachine(ref machineForPermutation3[i], ref machineForPermutation3[i + 1]);
+                }
+
+#if PERMUTATION_3MACHINES_PRINT
+                Console.WriteLine("\n[PERMUTATION][3 MACHINES]");
+                Console.WriteLine("Virtual Machines");
+                for (int i = 0; i < virtualMachineForPermutation3.Length; ++i)
+                {
+                    for (int j = 0; j < numberOfJobs; ++j)
+                    {
+                        Console.Write("{0}={1} ", virtualMachineForPermutation3[i].jobs[j].jobName, virtualMachineForPermutation3[i].jobs[j].time);
+                    }
+                    Console.Write("\n");
+                }
+#endif
+
+                Machine[] copyVirtualMachineForPermutation3 = new Machine[2];
+
+                for (int i = 0; i < copyVirtualMachineForPermutation3.Length; ++i)
+                {
+                    copyVirtualMachineForPermutation3[i] = virtualMachineForPermutation3[i].DeepCopy();
+                }
+
+                int factorial3 = Factorial(numberOfJobs);
+                string[,] array3 = new string[factorial3, numberOfJobs];
+                int count3 = 0;
+
+                PermutationAlgorithm.Permutation(ref charArray, 0, numberOfJobs - 1, ref array3, ref count3);
+
+#if PERMUTATION
+                Console.WriteLine("[PERMUTATION][3 MACHINES]");
+                for (int i = 0; i < factorial3; ++i)
+                {
+                    for (int j = 0; j < numberOfJobs; ++j)
+                    {
+                        Console.Write("{0} ", array3[i, j]);
+                    }
+                    Console.Write("\n");
+                }
+#endif
+
+                double theBestTime3 = MakeSpan(ref copyVirtualMachineForPermutation3[0], ref copyVirtualMachineForPermutation3[1]);
+                string[] theBestSequence3 = new string[numberOfJobs];
+
+                for (int i = 0; i < numberOfJobs; i++)
+                {
+                    theBestSequence3[i] = copyVirtualMachineForPermutation3[0].jobs[i].jobName;
+                }
+
+                for (int i = 1; i < factorial3; ++i)
+                {
+                    for (int j = 0; j < numberOfJobs; ++j)
+                    {
+                        for (int k = 0; k < numberOfJobs; ++k)
+                        {
+                            if (machines[0].jobs[k].jobName == array3[i, j])
+                            {
+                                virtualMachineForPermutation3[0].jobs[j].time = copyVirtualMachineForPermutation3[0].jobs[k].time;
+                                virtualMachineForPermutation3[0].jobs[j].jobName = copyVirtualMachineForPermutation3[0].jobs[k].jobName;
+                            }
+                            if (machines[1].jobs[k].jobName == array3[i, j])
+                            {
+                                virtualMachineForPermutation3[1].jobs[j].time = copyVirtualMachineForPermutation3[1].jobs[k].time;
+                                virtualMachineForPermutation3[1].jobs[j].jobName = copyVirtualMachineForPermutation3[1].jobs[k].jobName;
+                            }
+                        }
+                    }
+
+                    double currentTime = MakeSpan(ref virtualMachineForPermutation3[0], ref virtualMachineForPermutation3[1]);
+
+                    if (currentTime < theBestTime3)
+                    {
+                        theBestTime3 = currentTime;
+                        for (int p = 0; p < numberOfJobs; p++)
+                        {
+                            theBestSequence3[p] = virtualMachineForPermutation3[0].jobs[p].jobName;
                         }
                     }
                 }
-                Console.WriteLine("[JOHNSON {0} Machines] The best time = {1}", numberOfMachines ,MakeSpan(ref virtualMachineToJohnson[0], ref virtualMachineToJohnson[1]));
-                */
+
+#if PERMUTATION_3MACHINES_PRINT
+                Console.WriteLine("\n[PERMUTATION][3 MACHINES][THE BEST TIME AND SEQUENCES]");
+                Console.WriteLine("The best time for permutation 3 machines = {0}", theBestTime3);
+                for (int i = 0; i < numberOfJobs; ++i)
+                {
+                    Console.Write("{0} ", theBestSequence3[i]);
+                }
+                Console.Write("\n");
+#endif
+
+                // *************************************************************************************************
+                // END!!! NUMBER OF MACHINES:3, ALGORITHM:PERMUTATION
+                // *************************************************************************************************
+
+
+                // *************************************************************************************************
+                // NUMBER OF MACHINES:3, ALGORITHM:JOHNSON
+                // *************************************************************************************************
+
+                Machine[] machineForJohnson3 = new Machine[3];
+                Machine[] copyMachineForJohnson3 = new Machine[3];
+
+                for (int i = 0; i < machineForPermutation3.Length; ++i)
+                {
+                    machineForJohnson3[i] = machines[i].DeepCopy();
+                    copyMachineForJohnson3[i] = machines[i].DeepCopy();
+                }
+
+                Machine[] virtualMachineForJohnson3 = new Machine[2];
+
+                for (int i = 0; i < virtualMachineForJohnson3.Length; ++i)
+                {
+                    virtualMachineForJohnson3[i] = VirtualMachine(ref machineForJohnson3[i], ref machineForJohnson3[i + 1]);
+                }
+
+#if JOHNSON_3MACHINES_PRINT
+                Console.WriteLine("\n[JOHNSON][3 MACHINES]");
+                Console.WriteLine("Virtual Machines");
+                for (int i = 0; i < virtualMachineForJohnson3.Length; ++i)
+                {
+                    for (int j = 0; j < numberOfJobs; ++j)
+                    {
+                        Console.Write("{0}={1} ", virtualMachineForJohnson3[i].jobs[j].jobName, virtualMachineForJohnson3[i].jobs[j].time);
+                    }
+                    Console.Write("\n");
+                }
+#endif
+
+                Machine[] copyVirtualMachineForJohnson3 = new Machine[2];
+
+                for (int i = 0; i < copyVirtualMachineForJohnson3.Length; ++i)
+                {
+                    copyVirtualMachineForJohnson3[i] = virtualMachineForJohnson3[i].DeepCopy();
+                }
+
+                Job[] outputJobs3 = JohnsonAlgorithm.JohnsonAlg(ref copyVirtualMachineForJohnson3[0], ref copyVirtualMachineForJohnson3[1]);
+
+                for (int j = 0; j < numberOfJobs; ++j)
+                {
+                    for (int k = 0; k < numberOfJobs; ++k)
+                    {
+                        if (outputJobs3[j].jobName == charArray[k])
+                        {
+                            virtualMachineForJohnson3[0].jobs[j].time = copyVirtualMachineForJohnson3[0].jobs[k].time;
+                            virtualMachineForJohnson3[0].jobs[j].jobName = copyVirtualMachineForJohnson3[0].jobs[k].jobName;
+
+                            virtualMachineForJohnson3[1].jobs[j].time = copyVirtualMachineForJohnson3[1].jobs[k].time;
+                            virtualMachineForJohnson3[1].jobs[j].jobName = copyVirtualMachineForJohnson3[1].jobs[k].jobName;
+                        }
+                    }
+                }
+#if JOHNSON_3MACHINES_PRINT
+                Console.WriteLine("\n[JOHNSON][3 MACHINES]");
+                Console.WriteLine("The best time = {0}", MakeSpan(ref virtualMachineForJohnson3[0], ref virtualMachineForJohnson3[1]));
+                for (int i = 0; i < numberOfJobs; ++i)
+                {
+                    Console.Write("{0} ", outputJobs3[i].jobName);
+                }
+                Console.Write(Environment.NewLine);
+#endif
+
+                // *************************************************************************************************
+                // END!!! NUMBER OF MACHINES:3, ALGORITHM:JOHNSON
+                // *************************************************************************************************
+
+                Console.ReadKey();
             }
-            Console.ReadKey();
-
-            // // string[] jobName = new string[]{ "A", "B", "C", "D", "E" };
-            // // double[] timeA = new double[] {  3.2, 4.7, 2.2, 5.8, 3.1 };
-            // // double[] timeB = new double[] {  4.2, 1.5, 5.0, 4.0, 2.8 };
-            // // double[] timeC = new double[] {  3.5, 2.2, 5.5, 7.1, 8.1 };
-            // // int Length1 = jobName.Length;
-            // //int factorial = Factorial(Length1);
-            // // string[,] array = new string[factorial, Length1];
-            //  //int count = 0;
-
-            //  Machine mach1 = new Machine(Length1);
-            //  Machine mach2 = new Machine(Length1);
-            //  Machine mach3 = new Machine(Length1);
-
-            //  Machine VirtualMachine1 = new Machine(Length1);
-            //  Machine VirtualMachine2 = new Machine(Length1);
-
-            //  SetValue(mach1, jobName, timeA);
-            //  SetValue(mach2, jobName, timeB);
-            //  SetValue(mach3, jobName, timeC);
-
-            //  VirtualMachine1 = VirtualMachine( ref mach1,  ref mach2);
-            //  VirtualMachine2 = VirtualMachine( ref mach2,  ref mach3);
-
-            //  Print(VirtualMachine1);
-            //  Print(VirtualMachine2);
-
-            //  Machine VirtualMachine1ToJohnson = VirtualMachine1.ShallowCopy();
-            //  Machine VirtualMachine2ToJohnson = VirtualMachine2.ShallowCopy();
-
-            //  Machine VirtualMachine1Copy = VirtualMachine1.ShallowCopy();
-            //  Machine VirtualMachine2Copy = VirtualMachine2.ShallowCopy();
-
-            //  Machine VirtualMachine1CopyCo = VirtualMachine1.ShallowCopy();
-            //  Machine VirtualMachine2CopyCo = VirtualMachine2.ShallowCopy();
-
-            //  //-----------------------
-            //  //-Johnson Algoritm for 3 machine
-            //  //------------------------------------
-
-            //  Console.WriteLine("3 MACHINES");
-
-            //  Print(VirtualMachine1CopyCo);
-            //  Print(VirtualMachine2CopyCo);
-            //  Job[] outputJob3 = JohnsonAlgorithm.JohnsonAlg(ref VirtualMachine1CopyCo,  ref VirtualMachine2CopyCo);
-
-            //  for (int i = 0; i < Length1; ++i)
-            //  {
-            //      Console.Write("{0} ", outputJob3[i].jobName);
-            //  }
-
-            //  for (int j = 0; j < Length1; ++j)
-            //  {
-            //      for (int k = 0; k < Length1; ++k)
-            //      {
-            //          if (outputJob3[j].jobName == jobName[k])
-            //          {
-            //              VirtualMachine1ToJohnson.jobs[j].time = VirtualMachine1CopyCo.jobs[k].time;
-            //              VirtualMachine1ToJohnson.jobs[j].jobName = jobName[k];
-
-            //              VirtualMachine2ToJohnson.jobs[j].time = VirtualMachine2CopyCo.jobs[k].time;
-            //              VirtualMachine2ToJohnson.jobs[j].jobName = jobName[k];
-            //          }
-            //      }
-            //  }
-            //  Console.WriteLine("[JOHNSON] The best time = {0}", MakeSpan(ref VirtualMachine1ToJohnson, ref VirtualMachine2ToJohnson));
-
-            //  for (int i = 0; i < Length1; ++i)
-            //  {
-            //      Console.Write("{0} ", outputJob3[i].jobName);
-            //  }
-            //  Console.Write(Environment.NewLine);
-            // // Console.Write("Virtual Mach1 \n");
-            // // Print(VirtualMachine1ToJohnson);
-            ////  Console.Write("Virtual Mach2 \n");
-            ////  Print(VirtualMachine2ToJohnson);
-
-            //  Machine copyMach1 = mach1.ShallowCopy();
-            //  Machine copyMach2 = mach2.ShallowCopy();
-
-            //  Console.Write("Mach1 \n");
-            //  Print(copyMach1);
-            //  Console.Write("Mach2 \n");
-            //  Print(copyMach2);
-
-            //  Job[] outputJobs2 = JohnsonAlgorithm.JohnsonAlg(ref mach1,ref mach2);
-
-            //  Machine Mach1ToJohnson = mach1.ShallowCopy();
-            //  Machine Mach2ToJohnson = mach2.ShallowCopy();
-
-            //  for (int j = 0; j < Length1; ++j)
-            //  {
-            //      for (int k = 0; k < Length1; ++k)
-            //      {
-            //          if (outputJobs2[j].jobName == jobName[k])
-            //          {
-            //              Mach1ToJohnson.jobs[j].time = timeA[k];
-            //              Mach1ToJohnson.jobs[j].jobName = jobName[k];
-
-            //              Mach2ToJohnson.jobs[j].time = timeB[k];
-            //              Mach2ToJohnson.jobs[j].jobName = jobName[k];
-            //          }
-            //      }
-            //  }
-            //  Console.Write("Mach1 \n");
-            //  Print(Mach1ToJohnson);
-            //  Console.Write("Mach2 \n");
-            //  Print(Mach2ToJohnson);
-
-            //  Console.WriteLine("[JOHNSON] The best time = {0}", MakeSpan(ref Mach1ToJohnson, ref Mach2ToJohnson));
-
-            //  for (int i = 0; i < Length1; ++i)
-            //  {
-            //      Console.Write("{0} ", outputJobs2[i].jobName);
-            //  }
-            //  Console.Write(Environment.NewLine);
-
-            //  PermutationAlgorithm.Permutation(ref jobName, 0, jobName.Length - 1, ref array, ref count);
-
-            //  Machine Mach1ToPermutation = new Machine(Length1);
-            //  Machine Mach2ToPermutation = new Machine(Length1);
-
-            //  Machine VirtualMachine1ToPermutation = new Machine(Length1); 
-            //  Machine VirtualMachine2ToPermutation = new Machine(Length1);
-
-            //  Print(VirtualMachine1Copy);
-            //  Print(VirtualMachine2Copy);
-
-            //  double theBestTime = MakeSpan(ref copyMach1, ref copyMach2);
-            //  string[] theBestSequence = new string[Length1];
-
-            //  string[] theBestSequence3 = new string[Length1];
-
-
-            //  Print(VirtualMachine1Copy);
-            //  Print(VirtualMachine2Copy);
-
-            //  double theBestTime3 = MakeSpan(ref VirtualMachine1Copy, ref VirtualMachine2Copy);
-            //  Print(VirtualMachine1Copy);
-            //  Print(VirtualMachine2Copy);
-            //  //---------------
-            //  //Permutation 3 Machine
-            //  //---------------
-
-            //  for (int i = 0; i < Length1; i++)
-            //  {
-            //      theBestSequence3[i] = VirtualMachine1Copy.jobs[i].jobName;
-            //  }
-
-            //  for (int i = 1; i < factorial; ++i)
-            //  {
-            //      for (int j = 0; j < Length1; ++j)
-            //      {
-            //          for (int k = 0; k < Length1; ++k)
-            //          {
-            //              if (mach1.jobs[k].jobName == array[i, j])
-            //              {
-            //                  VirtualMachine1ToPermutation.jobs[j].time = VirtualMachine1Copy.jobs[k].time;
-            //                  VirtualMachine1ToPermutation.jobs[j].jobName = VirtualMachine1Copy.jobs[k].jobName;
-            //              }
-            //              if (mach2.jobs[k].jobName == array[i, j])
-            //              {
-            //                  VirtualMachine2ToPermutation.jobs[j].time = VirtualMachine2Copy.jobs[k].time;
-            //                  VirtualMachine2ToPermutation.jobs[j].jobName = VirtualMachine2Copy.jobs[k].jobName;
-            //              }
-            //          }
-            //      }
-
-            //      double currentTime3 = MakeSpan(ref VirtualMachine1ToPermutation, ref VirtualMachine2ToPermutation);
-
-            //      if (currentTime3 < theBestTime3)
-            //      {
-            //          theBestTime3 = currentTime3;
-            //          for (int p = 0; p < Length1; p++)
-            //          {
-            //              theBestSequence3[p] = VirtualMachine1ToPermutation.jobs[p].jobName;
-            //          }
-            //      }
-            //  }
-            //  Console.WriteLine("[PERMUTATION 3 Machine] The best time = {0}", theBestTime3);
-
-            //  for (int i = 0; i < Length1; ++i)
-            //  {
-            //      Console.Write("{0} ", theBestSequence3[i]);
-            //  }
-
-            //  //-------------------------------------------------------------
-            //  //2 maszyny
-            //  //-------------------------------------------------------------
-            //  for (int i = 0; i < Length1; i++)
-            //  {
-            //      theBestSequence[i] = copyMach1.jobs[i].jobName;
-            //  }
-
-            //  for (int i = 1; i < factorial; ++i)
-            //  {
-            //      for (int j = 0; j < Length1; ++j)
-            //      {
-            //          for (int k = 0; k < Length1; ++k)
-            //          {
-            //              if (mach1.jobs[k].jobName == array[i, j])
-            //              {
-            //                  Mach1ToPermutation.jobs[j].time = copyMach1.jobs[k].time;
-            //                  Mach1ToPermutation.jobs[j].jobName = copyMach1.jobs[k].jobName;
-            //              }
-            //              if (mach2.jobs[k].jobName == array[i, j])
-            //              {
-            //                  Mach2ToPermutation.jobs[j].time = copyMach2.jobs[k].time;
-            //                  Mach2ToPermutation.jobs[j].jobName = copyMach2.jobs[k].jobName;
-            //              }
-            //          }
-            //      }
-
-            //      double currentTime = MakeSpan(ref Mach1ToPermutation, ref Mach2ToPermutation);
-
-            //      if (currentTime < theBestTime)
-            //      {
-            //          theBestTime = currentTime;
-            //          for (int p = 0; p < Length1; p++)
-            //          {
-            //              theBestSequence[p] = Mach1ToPermutation.jobs[p].jobName;
-            //          }
-            //      }
-            //  }
-
-            //  Console.WriteLine("\n[PERMUTATION 2 MAchine] The best time = {0}", theBestTime);
-
-            //  for (int i = 0; i < Length1; ++i)
-            //  {
-            //      Console.Write("{0} ", theBestSequence[i]);
-            //  }
-
-            //  Console.Write("\n\n");
-            //  Console.ReadKey();
         }
     }
 }
